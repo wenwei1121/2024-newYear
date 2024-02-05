@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import Layout from "./layouts/Layout.vue"
 </script>
 
 <template>
-  <router-view></router-view>
+  <Layout>
+    <router-view></router-view>
+  </Layout>
 </template>
 
 <style scoped>

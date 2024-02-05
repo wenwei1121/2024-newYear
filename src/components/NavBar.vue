@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 const route = useRoute();
-const router = useRouter();
-console.log(router);
 
 const routerLinkClass = (routeName: string) => {
   const variabilityClass = route.name === routeName ? 'bg-violet-500 text-white' : 'text-gray-900 hover:bg-violet-700 hover:text-white'
@@ -13,11 +11,10 @@ const routerLinkClass = (routeName: string) => {
 </script>
 
 <template>
-  <div class="w-full p-2">
     <Menu as="div" class="relative inline-block text-left">
       <div>
         <MenuButton
-          class="inline-flex w-full justify-center rounded-md bg-violet-500 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+          class="inline-flex w-full justify-center rounded-md bg-violet-500 px-4 py-2 text-lg font-medium text-white hover:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
         >
           NavList
         </MenuButton>
@@ -32,10 +29,10 @@ const routerLinkClass = (routeName: string) => {
         leave-to-class="transform scale-95 opacity-0"
       >
         <MenuItems
-          class="absolute mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+          class="z-10 absolute mt-3 w-80 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
         >
-          <div class="px-1 py-1">
-            <MenuItem>
+          <div class="px-2 py-2">
+            <MenuItem class="text-lg">
               <router-link
                 :to="'/GameHome'"
                 :class="[routerLinkClass('GameHome')]"
@@ -44,8 +41,8 @@ const routerLinkClass = (routeName: string) => {
               </router-link>
             </MenuItem>
           </div>
-          <div class="px-1 py-1">
-            <MenuItem>
+          <div class="px-2 py-2">
+            <MenuItem class="text-lg">
               <router-link
                 :to="'/GameResult'"
                 :class="[routerLinkClass('GameResult')]"
@@ -57,7 +54,6 @@ const routerLinkClass = (routeName: string) => {
         </MenuItems>
       </transition>
     </Menu>
-  </div>
 </template>
 
 <style>
