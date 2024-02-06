@@ -15,7 +15,7 @@ const slotDataList = computed(() => props.dataList);
         <table class="table table-zebra">
             <thead>
                 <tr>
-                    <th v-for="(field, _index) of fields" :key="_index">{{ field }}</th>
+                    <th v-for="(field, _index) of fields" :key="_index" class="text-2xl">{{ field }}</th>
                 </tr>
             </thead>
             <tbody>

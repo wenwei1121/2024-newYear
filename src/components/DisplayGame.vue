@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useUtils } from "../composables/useUtils";
+import { useAlerts } from "../composables/useAlerts"
 
 const { getRandomNum } = useUtils();
+const { checkAlert } = useAlerts();
 
-const remainNum = ref(16);
+const remainNum = ref(15);
 
 type CardItem = {
   text: "中" | "無"
@@ -16,11 +18,15 @@ onMounted(() => {
   refreshChooseCardItems();
 })
 
-const showCardItem = (cardItem: CardItem) => {
+const showCardItem = async (cardItem: CardItem) => {
+  const res = await checkAlert("確定要選擇這個嗎?");
+  if (!res) return;
+
   cardItem.show = true;
 
   if (cardItem.text === "中") {
-    alert("中!");
+    await checkAlert("恭喜中獎!", { showCancelButton: false });
+
     remainNum.value -= 1;
     refreshChooseCardItems();
   }
@@ -52,7 +58,12 @@ const randomChange = () => {
         @click="showCardItem(item)"
       >
         <div class="card-body">
-          <p class="card-title justify-center h-full text-5xl text-white">{{ item.show ? item.text : _index + 1 }}</p>
+          <p
+            class="card-title justify-center h-full text-5xl"
+            :class="[item.show ? (item.text === '中' ? 'text-red-500' : '') : 'text-white']"
+          >
+            {{ item.show ? item.text : _index + 1 }}
+          </p>
         </div>
       </div>
     </div>

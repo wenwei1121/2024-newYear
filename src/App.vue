@@ -4,9 +4,12 @@ import Layout from "./layouts/Layout.vue"
 
 <template>
   <Layout>
-    <router-view></router-view>
+    <router-view #default="{ Component }">
+      <KeepAlive>
+        <component :is="Component" />
+      </KeepAlive>
+    </router-view>
   </Layout>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

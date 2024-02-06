@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import CommonTable from "./CommonTable.vue";
 import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useCurrentInfo } from "../store/index";
+
+const { currentMember } = storeToRefs(useCurrentInfo());
 
 const tableFields = ["sortNum", "Name"];
 
@@ -27,8 +31,6 @@ const members = ref<Member[]>([
     { id: 15, name: "傑宇" },
 ]);
 
-const currentMember = ref<Member>(members.value[0]);
-
 const randomSortMember = () => {
     const newMember: Member[] = [];
     
@@ -53,8 +55,8 @@ onMounted(() => {
         :dataList="members"
     >
         <template #default="{ data, sortNum }">
-            <th>{{ sortNum + 1 }}</th>
-            <td>{{ data.name }}</td>
+            <th class="text-2xl">{{ sortNum + 1 }}</th>
+            <td class="text-2xl">{{ data.name }}</td>
         </template>
     </common-table>
 </template>
