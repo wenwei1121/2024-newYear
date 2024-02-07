@@ -1,5 +1,5 @@
 export const useUtils = () => {
-  const getRandomNum = (maxNum: number) => Math.floor(Math.random() * maxNum + 1);
+  const getRandomNum = (maxNum: number, addNum: number = 0) => Math.floor(Math.random() * maxNum + addNum);
 
   return {
     getRandomNum

@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends { id: number }">
+<script setup lang="ts" generic="T">
 import { computed } from "vue"
 
 interface Props {
@@ -19,7 +19,7 @@ const slotDataList = computed(() => props.dataList);
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(data, _index) of slotDataList" :key="data.id">
+                <tr v-for="(data, _index) of slotDataList" :key="_index">
                     <slot :data="data" :sortNum="_index" />
                 </tr>
             </tbody>

@@ -6,7 +6,7 @@ export const useAlerts = () => {
       icon = "warning",
       showConfirmButton = true,
       confirmButtonText = "確定",
-      confirmButtonColor = "#007bff",
+      confirmButtonColor = "violet-500",
       showCancelButton = true,
       cancelButtonText = "取消",
       cancelButtonColor = "gray",

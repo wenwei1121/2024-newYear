@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useCurrentInfo } from "../store/index";
 import { useUtils } from "../composables/useUtils";
 import { useAlerts } from "../composables/useAlerts"
 
+const currentInfoStore = useCurrentInfo();
+const { currentMember, members, currentPrize } = storeToRefs(currentInfoStore);
+const {
+  nextPrize,
+  nextMember,
+  randomSortMember,
+  removeGainCurrentPrizeMember
+} = currentInfoStore;
+
 const { getRandomNum } = useUtils();
 const { checkAlert } = useAlerts();
-
-const remainNum = ref(15);
 
 type CardItem = {
   text: "中" | "無"
@@ -25,11 +34,20 @@ const showCardItem = async (cardItem: CardItem) => {
   cardItem.show = true;
 
   if (cardItem.text === "中") {
-    await checkAlert("恭喜中獎!", { showCancelButton: false });
+    await checkAlert(
+      `恭喜 ${currentMember.value.name} 中 $${currentPrize.value} !`,
+      { showCancelButton: false }
+    );
 
-    remainNum.value -= 1;
+    removeGainCurrentPrizeMember();
+    randomSortMember();
+    nextPrize();
+
     refreshChooseCardItems();
+    return;
   }
+
+  nextMember();
 }
 
 const refreshChooseCardItems = () => {
@@ -39,13 +57,13 @@ const refreshChooseCardItems = () => {
 
 const initChooseCardItems = () => {
   chooseCardItems.value = [];
-  for (let i = 1; i <= remainNum.value * 2; i++) {
+  for (let i = 1; i <= members.value.length * 2; i++) {
     chooseCardItems.value.push({ text: "無", show: false });
   }
 }
 
 const randomChange = () => {
-  chooseCardItems.value[getRandomNum(remainNum.value) - 1].text = "中";
+  chooseCardItems.value[getRandomNum(members.value.length * 2)].text = "中";
 };
 </script>
 
