@@ -27,21 +27,21 @@ export const useCurrentInfoStore = defineStore("currentInfo", () => {
   const currentMember = computed(() => members.value[currentNum.value] ?? { id: 0, name: "" });
 
   const members = ref<Member[]>([
-    { id: 1, name: "宏森" },
-    { id: 2, name: "秀鳳" },
-    { id: 3, name: "國正" },
-    { id: 4, name: "玉玲" },
-    { id: 5, name: "敏男" },
-    { id: 6, name: "秀蘭" },
-    { id: 7, name: "耀輝" },
-    { id: 8, name: "清吟" },
-    { id: 9, name: "馨儀" },
-    { id: 10, name: "馨儀男友" },
-    { id: 11, name: "榳洧" },
-    { id: 12, name: "榳洧男友" },
-    { id: 13, name: "寧" },
-    { id: 14, name: "寧男友" },
-    { id: 15, name: "傑宇" },
+    { id: 1, name: "ch541215" },
+    { id: 2, name: "showfengzhang" },
+    { id: 3, name: "bigtako1972" },
+    { id: 4, name: "moneylo9453" },
+    { id: 5, name: "cat6389061a" },
+    { id: 6, name: "show621113" },
+    { id: 7, name: "huei_" },
+    { id: 8, name: "enidChuang" },
+    { id: 9, name: "chiukillcat" },
+    { id: 10, name: "chiukillcat BF" },
+    { id: 11, name: "sunnyyyyy1004" },
+    { id: 12, name: "sunnyyyyy1004 BF" },
+    { id: 13, name: "__ningchang__" },
+    { id: 14, name: "__ningchang__ BF" },
+    { id: 15, name: "y.j.u_0206" },
   ]);
 
   const randomSortMember = () => {
