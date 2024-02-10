@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useCurrentInfo } from "../store/index";
+import { useCurrentInfoStore } from "../store/useCurrentInfoStore";
+import { useGameResultInfoStore } from "../store/useGameResultInfoStore";
 import { useUtils } from "../composables/useUtils";
-import { useAlerts } from "../composables/useAlerts"
+import { useAlerts } from "../composables/useAlerts";
 
-const currentInfoStore = useCurrentInfo();
+const currentInfoStore = useCurrentInfoStore();
 const { currentMember, members, currentPrize } = storeToRefs(currentInfoStore);
 const {
   nextPrize,
@@ -13,6 +14,8 @@ const {
   randomSortMember,
   removeGainCurrentPrizeMember
 } = currentInfoStore;
+
+const { addNewResult } = useGameResultInfoStore();
 
 const { getRandomNum } = useUtils();
 const { checkAlert } = useAlerts();
@@ -28,6 +31,7 @@ onMounted(() => {
 })
 
 const showCardItem = async (cardItem: CardItem) => {
+  if (cardItem.show) return;
   const res = await checkAlert("確定要選擇這個嗎?");
   if (!res) return;
 
@@ -35,15 +39,16 @@ const showCardItem = async (cardItem: CardItem) => {
 
   if (cardItem.text === "中") {
     await checkAlert(
-      `恭喜 ${currentMember.value.name} 中 $${currentPrize.value} !`,
+      `恭喜 "${currentMember.value.name}" 中 "$${currentPrize.value}" !`,
       { showCancelButton: false }
     );
 
+    addNewResult();
     removeGainCurrentPrizeMember();
     randomSortMember();
     nextPrize();
-
     refreshChooseCardItems();
+    
     return;
   }
 
@@ -52,7 +57,7 @@ const showCardItem = async (cardItem: CardItem) => {
 
 const refreshChooseCardItems = () => {
   initChooseCardItems();
-  randomChange();
+  randomChangeCardItem();
 }
 
 const initChooseCardItems = () => {
@@ -62,7 +67,8 @@ const initChooseCardItems = () => {
   }
 }
 
-const randomChange = () => {
+const randomChangeCardItem = () => {
+  if (!chooseCardItems.value.length) return;
   chooseCardItems.value[getRandomNum(members.value.length * 2)].text = "中";
 };
 </script>

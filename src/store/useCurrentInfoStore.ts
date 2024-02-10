@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue"
 import { useUtils } from "../composables/useUtils";
 
-export const useCurrentInfo = defineStore("currentInfo", () => {
+export const useCurrentInfoStore = defineStore("currentInfo", () => {
 
   const { getRandomNum } = useUtils();
 
@@ -24,7 +24,7 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
     name: string
   }
   
-  const currentMember = computed(() => members.value[currentNum.value]);
+  const currentMember = computed(() => members.value[currentNum.value] ?? { id: 0, name: "" });
 
   const members = ref<Member[]>([
     { id: 1, name: "宏森" },
@@ -60,11 +60,11 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
     members.value.splice(currentNum.value, 1)
   }
 
-  //
+  ////// 
 
   const currentPrizeNum = ref(0);
 
-  const currentPrize = computed(() => prizeList[currentPrizeNum.value]);
+  const currentPrize = computed(() => prizeList[currentPrizeNum.value] ?? "0");
 
   const prizeList = [
     "200", "200", "200", "200", "200", "200", "600", "600", "600", "800", "800", "800", "1000", "1200", "2000"

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import CommonTable from './CommonTable.vue';
-import { useCurrentInfo } from "../store/index";
+import { useCurrentInfoStore } from "../store/useCurrentInfoStore";
 
-const currentInfoStore = useCurrentInfo();
+const currentInfoStore = useCurrentInfoStore();
 
 const currentPrizeIndicatorStyle = (prize: number) => Number(currentInfoStore.currentPrize) === prize
   ? 'border-s-8 border-yellow-200'
   : '';
 
-const tableFields = ["prize", "amount"];
+const tableFields = ["抽獎金額", "數量"];
 </script>
 
 <template>

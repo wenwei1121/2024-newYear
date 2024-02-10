@@ -2,12 +2,12 @@
 import CommonTable from "./CommonTable.vue";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useCurrentInfo } from "../store/index";
+import { useCurrentInfoStore } from "../store/useCurrentInfoStore";
 
-const currentInfoStore = useCurrentInfo();
+const currentInfoStore = useCurrentInfoStore();
 const { currentNum, members } = storeToRefs(currentInfoStore);
 
-const tableFields = ["sortNum", "Name"];
+const tableFields = ["排序", "抽獎者"];
 
 const currentMemberIndicatorStyle = (sortNum: number) => currentNum.value === sortNum ? 'border-s-8 border-yellow-200': '';
 
