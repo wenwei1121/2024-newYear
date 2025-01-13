@@ -6,11 +6,16 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
 
   const { getRandomNum } = useUtils();
 
+  const isReverse = ref(false);
+
   const currentNum = ref(0);
 
   const nextMember = () => {
-    currentNum.value += 1;
-    if (!members.value[currentNum.value]) {
+    currentNum.value = isReverse.value ? currentNum.value - 1 : currentNum.value + 1;
+    if (currentNum.value < 0) {
+      currentNum.value = membersLength.value - 1
+    }
+    if (currentNum.value >= membersLength.value) {
       initCurrentNum();
     }
   }
@@ -23,8 +28,6 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
     id: number
     name: string
   }
-  
-  const currentMember = computed(() => members.value[currentNum.value]);
 
   const members = ref<Member[]>([
     { id: 1, name: "宏森" },
@@ -40,9 +43,13 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
     { id: 11, name: "榳洧" },
     { id: 12, name: "榳洧男友" },
     { id: 13, name: "寧" },
-    { id: 14, name: "寧男友" },
-    { id: 15, name: "傑宇" },
+    { id: 14, name: "傑宇" },
+    { id: 15, name: "邱可利" }
   ]);
+
+  const membersLength = computed(() => members.value.length);
+
+  const currentMember = computed(() => members.value[currentNum.value]);
 
   const randomSortMember = () => {
     const newMember: Member[] = [];
@@ -57,45 +64,51 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
   };
 
   const removeGainCurrentPrizeMember = () => {
-    members.value.splice(currentNum.value, 1)
+    const test = currentNum.value;
+    if (currentNum.value === membersLength.value - 1) {
+      nextMember();
+    }
+    members.value.splice(test, 1)
   }
-
-  //
 
   const currentPrizeNum = ref(0);
 
   const currentPrize = computed(() => prizeList[currentPrizeNum.value]);
 
   const prizeList = [
-    "200", "200", "200", "200", "200", "200", "600", "600", "600", "800", "800", "800", "1000", "1200", "2000"
+    200,
+    200,
+    600,
+    1000,
+    800,
+    600,
+    200,
+    1200,
+    200,
+    600,
+    800,
+    1600,
+    800,
+    200,
+    2000,
   ];
   
-  const prizeInfoList = prizeList.reduce((acc, cur) => {
-    if (!acc[cur]) {
-      acc[cur] = {
-        prize: Number(cur),
-        amount: 0
-      }
-    }
-  
-    acc[cur].amount += 1;
-    return acc;
-  }, {} as { [key: string]: { prize: number, amount: number } });
-
   const nextPrize = () => {
-    initCurrentNum();
     currentPrizeNum.value++
   }
 
   return {
+    isReverse,
     currentNum,
+    prizeList,
+    currentPrizeNum,
     nextPrize,
     nextMember,
-    currentMember,
     members,
+    membersLength,
+    currentMember,
     randomSortMember,
     removeGainCurrentPrizeMember,
     currentPrize,
-    prizeInfoList
   }
 });

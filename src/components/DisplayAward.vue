@@ -4,21 +4,21 @@ import { useCurrentInfo } from "../store/index";
 
 const currentInfoStore = useCurrentInfo();
 
-const currentPrizeIndicatorStyle = (prize: number) => Number(currentInfoStore.currentPrize) === prize
-  ? 'border-s-8 border-yellow-200'
+const currentPrizeIndicatorStyle = (sortNum: number) => sortNum === currentInfoStore.currentPrizeNum
+  ? 'border-y-8 border-yellow-200'
   : '';
 
-const tableFields = ["prize", "amount"];
+const tableFields = ["", "獎金"];
 </script>
 
 <template>
     <common-table
       :fields="tableFields"
-      :data-list="Object.values(currentInfoStore.prizeInfoList)"
+      :data-list="currentInfoStore.prizeList"
     >
-      <template #default="{ data }">
-        <td class="text-2xl" :class="[currentPrizeIndicatorStyle(data.prize)]">${{ data.prize }}</td>
-        <td class="text-2xl">{{ data.amount }}</td>
+      <template #default="{ data, sortNum }">
+        <td class="text-2xl" :class="[currentPrizeIndicatorStyle(sortNum)]">{{ sortNum + 1 }}</td>
+        <td class="text-2xl" :class="[currentPrizeIndicatorStyle(sortNum)]">{{ data }}</td>
       </template>
     </common-table>
 </template>

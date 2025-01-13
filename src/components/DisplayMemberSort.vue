@@ -7,9 +7,11 @@ import { useCurrentInfo } from "../store/index";
 const currentInfoStore = useCurrentInfo();
 const { currentNum, members } = storeToRefs(currentInfoStore);
 
-const tableFields = ["sortNum", "Name"];
+const tableFields = ["", "參加者"];
 
-const currentMemberIndicatorStyle = (sortNum: number) => currentNum.value === sortNum ? 'border-s-8 border-yellow-200': '';
+const currentMemberIndicatorStyle = (sortNum: number) => currentNum.value === sortNum
+  ? 'border-y-8 border-yellow-200'
+  : '';
 
 onMounted(() => {
   currentInfoStore.randomSortMember();
@@ -20,7 +22,7 @@ onMounted(() => {
   <common-table :fields="tableFields" :dataList="members">
     <template #default="{ data, sortNum }">
       <th class="text-2xl" :class="[currentMemberIndicatorStyle(sortNum)]">{{ sortNum + 1 }}</th>
-      <td class="text-2xl">{{ data.name }}</td>
+      <td class="text-2xl" :class="[currentMemberIndicatorStyle(sortNum)]">{{ data.name }}</td>
     </template>
   </common-table>
 </template>
