@@ -9,7 +9,7 @@ import {
   PlusIcon,
   UserIcon
 } from "@heroicons/vue/24/solid";
-import { useCurrentInfo } from "../store/index";
+import { type PrizeResult, useCurrentInfo } from "../store/index";
 import { useUtils } from "../composables/useUtils";
 import { useAlerts } from "../composables/useAlerts";
 
@@ -19,6 +19,7 @@ const {
   currentMember,
   membersLength,
   currentPrize,
+  prizeResult
 } = storeToRefs(currentInfoStore);
 const {
   nextPrize,
@@ -82,14 +83,19 @@ const showCardItem = async (cardItem: CardItem) => {
   cardItem.show = true;
 
   if (cardItem.text === "Won") {
+    const name = currentMember.value.name;
+    const prize = currentPrize.value;
     await checkAlert(
-      `恭喜 ${currentMember.value.name} 中 $${currentPrize.value} !`,
+      `恭喜 ${name} 中 $${prize} !`,
       { showCancelButton: false }
     );
-  
+
+    prizeResult.value.push({ name, prize } as PrizeResult)
     removeGainCurrentPrizeMember();
-    nextPrize();
-    refreshChooseCardItems();
+    if (membersLength.value) {
+      nextPrize();
+      refreshChooseCardItems();
+    }
     return;
   }
 

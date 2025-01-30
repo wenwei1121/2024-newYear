@@ -2,6 +2,11 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue"
 import { useUtils } from "../composables/useUtils";
 
+export type PrizeResult = {
+  name: string
+  prize: number
+}
+
 export const useCurrentInfo = defineStore("currentInfo", () => {
 
   const { getRandomNum } = useUtils();
@@ -80,22 +85,24 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
     200,
     600,
     1000,
-    800,
-    600,
     200,
+    600,
+    800,
     1200,
     200,
-    600,
+    200,
     800,
     1600,
     800,
-    200,
+    600,
     2000,
   ];
   
   const nextPrize = () => {
     currentPrizeNum.value++
   }
+
+  const prizeResult = ref<PrizeResult[]>([])
 
   return {
     isReverse,
@@ -110,5 +117,6 @@ export const useCurrentInfo = defineStore("currentInfo", () => {
     randomSortMember,
     removeGainCurrentPrizeMember,
     currentPrize,
+    prizeResult,
   }
 });

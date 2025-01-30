@@ -12,7 +12,7 @@ const { currentMember, currentPrize, isReverse } = storeToRefs(useCurrentInfo())
           <p>目前金額：<span class="text-yellow-200">${{ currentPrize }}</span></p>
         </div>
         <div class="flex-auto border-s-2 text-center text-5xl">
-          <p>目前參加者：<span class="text-yellow-200">{{ currentMember.name }}</span></p>
+          <p>目前參加者：<span class="text-yellow-200">{{ currentMember?.name ?? "" }}</span></p>
         </div>
         <div class="flex-auto border-s-2 text-center text-5xl">
           <p>目前順序狀態：<span class="text-yellow-200">{{ isReverse ? "逆序" : "正序" }}</span></p>
